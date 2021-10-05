@@ -1,6 +1,6 @@
 # Spree Starter
 
-This a dockerized [Spree Commerce](https://spreecommerce.org) application template ready to for local development and deployment to cloud providers.
+This a forked version of dockerized [Spree Commerce](https://spreecommerce.org) application template ready to for local development and Elasticbeanstalk. See [https://github.com/spree/spree_starter](https://github.com/spree/spree_starter) for the original.
 
 ## Deploy in the cloud
 
@@ -10,12 +10,37 @@ This a dockerized [Spree Commerce](https://spreecommerce.org) application templa
   <img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render" height=32>
 </a>
 
+### Elasticbeanstalk
+
+It is a fairly involved process to setup EB propery, therefore I wrote a [terraform module](https://github.com/sent-hil/terraform_common_modules) to automate most of it.
+
+Once that's setup from within the folder:
+
+#### Initialize EB
+
+```bash
+eb init
+```
+
+To depoy:
+
+#### Deploy
+
+```bash
+eb deploy
+```
+
+Since EB uses docker-compose.yml for deployment, I moved the development version to be under docker-compose.dev.yml.
+
+Note, the production version uses docker volumes to share bundle artificats and rails assest pipeline compiled assets. There have been instances where this has caused problems (once when upgrading version and other when the mimetypes were wrongly configured). If you run into any issues, start with deleting the two volumes with `sudo docker volume rm current_bundle_cache current_rails_assets`.
+
 ## Local Installation
 
 ### Using Docker (Recommended)
+
 #### Install required tools and dependencies:
 
-  * [Docker](https://www.docker.com/community-edition#/download)
+- [Docker](https://www.docker.com/community-edition#/download)
 
 #### Run setup script
 
@@ -71,6 +96,7 @@ Spree is a [headless e-commerce platform](https://dev-docs.spreecommerce.org/get
 ## Updating
 
 ### Connect to the docker container
+
 ```bash
 docker-compose run web bash
 ```
@@ -100,6 +126,7 @@ docker-compose run web bash
 ```
 
 ## Customization
+
 ### Adding new gems
 
 Update `Gemfile` and run
@@ -117,12 +144,12 @@ docker-compose restart
 
 ## Environment variables
 
-| variable | description | default value |
-|---|---|---|
-| DEBUG_ASSETS | Enables/disables [asset debugging in development](https://guides.rubyonrails.org/asset_pipeline.html#turning-debugging-off) | false |
-| DB_POOL | database connection pool | 5 |
-| MEMCACHED_POOL_SIZE | memcache connection pool | 5 |
-| SENDGRID_API_KEY | API key to interface Sendgrid API | |
+| variable            | description                                                                                                                 | default value |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| DEBUG_ASSETS        | Enables/disables [asset debugging in development](https://guides.rubyonrails.org/asset_pipeline.html#turning-debugging-off) | false         |
+| DB_POOL             | database connection pool                                                                                                    | 5             |
+| MEMCACHED_POOL_SIZE | memcache connection pool                                                                                                    | 5             |
+| SENDGRID_API_KEY    | API key to interface Sendgrid API                                                                                           |               |
 
 ## License
 
@@ -141,4 +168,4 @@ The names and logos are trademarks of Spark Solutions Sp. z o.o.
 We are passionate about open source software.
 We are [available for hire][spark].
 
-[spark]:http://sparksolutions.co?utm_source=github
+[spark]: http://sparksolutions.co?utm_source=github
