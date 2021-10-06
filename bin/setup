@@ -1,8 +1,8 @@
 
 rm -rf .env && cp -f .env.sample .env &&
-docker-compose pull &&
-docker-compose build web &&
-docker-compose run --rm web bash -c '
+docker-compose -f docker-compose.dev.yml pull &&
+docker-compose -f docker-compose.dev.yml build web &&
+docker-compose -f docker-compose.dev.yml run --rm web bash -c '
   bin/wait-for-services &&
   (bundle check || bundle install) &&
   bundle exec rails db:drop &&
@@ -11,4 +11,4 @@ docker-compose run --rm web bash -c '
   bundle exec rails db:seed &&
   rm -rf tmp/latest.dump
 ' &&
-docker-compose up
+docker-compose -f docker-compose.dev.yml up

@@ -12,7 +12,7 @@ This a forked version of dockerized [Spree Commerce](https://spreecommerce.org) 
 
 ### Elasticbeanstalk
 
-It is a fairly involved process to setup EB propery, therefore I wrote a [terraform module](https://github.com/sent-hil/terraform_common_modules) to automate most of it.
+It is a fairly involved process to setup EB propery. I wrote a [terraform module](https://github.com/sent-hil/terraform_common_modules) to automate most of it.
 
 Once that's setup from within the folder:
 
@@ -22,7 +22,7 @@ Once that's setup from within the folder:
 eb init
 ```
 
-To depoy:
+To deploy:
 
 #### Deploy
 
@@ -53,13 +53,13 @@ This will automatically launch the application at `http://localhost:4000/admin`
 #### (Optional) Import sample data such as products, categories, etc
 
 ```bash
-docker-compose run web rake spree_sample:load
+docker-compose -f docker-compose.dev.yml run web rake spree_sample:load
 ```
 
 #### Launching local server
 
 ```bash
-docker-compose up
+docker-compose -f docker-compose.dev.yml up
 ```
 
 ### Without Docker (not recommended for beginners)
@@ -98,7 +98,7 @@ Spree is a [headless e-commerce platform](https://dev-docs.spreecommerce.org/get
 ### Connect to the docker container
 
 ```bash
-docker-compose run web bash
+docker-compose -f docker-compose.dev.yml run web bash
 ```
 
 ### Run update commands
@@ -116,13 +116,13 @@ For additional instructions please visit [Spree Upgrade Guides](https://dev-docs
 ### Launching rails console
 
 ```bash
-docker-compose run web rails c
+docker-compose -f docker-compose.dev.yml run web rails c
 ```
 
 ### Launching bash console
 
 ```bash
-docker-compose run web bash
+docker-compose -f docker-compose.dev.yml run web bash
 ```
 
 ## Customization
@@ -133,13 +133,13 @@ Update `Gemfile` and run
 
 ```bash
 bundle install
-docker-compose build
+docker-compose -f docker-compose.dev.yml build
 ```
 
 You will need to restart the server if running:
 
 ```bash
-docker-compose restart
+docker-compose -f docker-compose.dev.yml restart
 ```
 
 ## Environment variables
