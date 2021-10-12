@@ -13,7 +13,6 @@ services:
     volumes:
       - '/var/log/nginx:/var/log/nginx'
       - './nginx.conf:/etc/nginx/nginx.conf'
-      - 'rails_assets:/var/www/public'
     ports:
       - '80:80'
     depends_on:
@@ -32,8 +31,6 @@ services:
     expose:
       - '4000'
     volumes:
-      - 'bundle_cache:/bundle'
-      - 'rails_assets:/app/public'
       - .env:/app/.env
     restart: on-failure
   worker:
@@ -47,12 +44,5 @@ services:
       - 'SECRET_KEY_BASE=${SECRET_KEY_BASE}'
       - 'BUNDLE_WITHOUT=${BUNDLE_WITHOUT}'
     volumes:
-      - 'bundle_cache:/bundle'
-      - 'rails_assets:/app/public'
       - .env:/app/.env
     restart: on-failure
-
-volumes:
-  bundle_cache:
-  # Create a volume for storing rails compiled assets to be used by web and nginx-proxy.
-  rails_assets:
